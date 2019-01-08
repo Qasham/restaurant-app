@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3eb9cfd5255e4d2eac4ac77dedfb3c36" Name="Diagram1">
+        <EntityTypeShape EntityType="RestaurantModel.AdminSetting" Width="1.5" PointX="6.625" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.DrinkCategory" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Drink" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.MealCategory" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Meal" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Order" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Table" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Waiter" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="RestaurantModel.FK__Drinks__Category__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK__Orders__DrinkID__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK__Meals__CategoryI__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK__Orders__MealID__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK__Orders__TableID__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK__Orders__WaiterID__4F7CD00D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AdminSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DrinkCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="Drinks" Relationship="Self.FK__Drinks__Category__49C3F6B7" FromRole="DrinkCategories" ToRole="Drinks" />
+  </EntityType>
+  <EntityType Name="Drink">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="DrinkCategory" Relationship="Self.FK__Drinks__Category__49C3F6B7" FromRole="Drinks" ToRole="DrinkCategories" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__DrinkID__4E88ABD4" FromRole="Drinks" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="MealCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="Meals" Relationship="Self.FK__Meals__CategoryI__4316F928" FromRole="MealCategories" ToRole="Meals" />
+  </EntityType>
+  <EntityType Name="Meal">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="PreparingTime" Type="Int32" />
+    <NavigationProperty Name="MealCategory" Relationship="Self.FK__Meals__CategoryI__4316F928" FromRole="Meals" ToRole="MealCategories" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__MealID__4D94879B" FromRole="Meals" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MealID" Type="Int32" />
+    <Property Name="DrinkID" Type="Int32" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="WaiterID" Type="Int32" />
+    <Property Name="HasPayment" Type="Boolean" />
+    <Property Name="TableID" Type="Int32" />
+    <NavigationProperty Name="Drink" Relationship="Self.FK__Orders__DrinkID__4E88ABD4" FromRole="Orders" ToRole="Drinks" />
+    <NavigationProperty Name="Meal" Relationship="Self.FK__Orders__MealID__4D94879B" FromRole="Orders" ToRole="Meals" />
+    <NavigationProperty Name="Table" Relationship="Self.FK__Orders__TableID__5BE2A6F2" FromRole="Orders" ToRole="Tables" />
+    <NavigationProperty Name="Waiter" Relationship="Self.FK__Orders__WaiterID__4F7CD00D" FromRole="Orders" ToRole="Waiters" />
+    <Property Name="MealAmount" Type="Int32" />
+    <Property Name="DrinkAmount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HasOrder" Type="Boolean" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__TableID__5BE2A6F2" FromRole="Tables" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Waiter">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__WaiterID__4F7CD00D" FromRole="Waiters" ToRole="Orders" />
+  </EntityType>
+  <Association Name="FK__Drinks__Category__49C3F6B7">
+    <End Role="DrinkCategories" Type="Self.DrinkCategory" Multiplicity="0..1" />
+    <End Role="Drinks" Type="Self.Drink" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DrinkCategories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Drinks">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__DrinkID__4E88ABD4">
+    <End Role="Drinks" Type="Self.Drink" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drinks">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="DrinkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Meals__CategoryI__4316F928">
+    <End Role="MealCategories" Type="Self.MealCategory" Multiplicity="0..1" />
+    <End Role="Meals" Type="Self.Meal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MealCategories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Meals">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__MealID__4D94879B">
+    <End Role="Meals" Type="Self.Meal" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Meals">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="MealID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__TableID__5BE2A6F2">
+    <End Role="Tables" Type="Self.Table" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tables">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="TableID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__WaiterID__4F7CD00D">
+    <End Role="Waiters" Type="Self.Waiter" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Waiters">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="WaiterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestaurantEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AdminSettings" EntityType="Self.AdminSetting" />
+    <EntitySet Name="DrinkCategories" EntityType="Self.DrinkCategory" />
+    <EntitySet Name="Drinks" EntityType="Self.Drink" />
+    <EntitySet Name="MealCategories" EntityType="Self.MealCategory" />
+    <EntitySet Name="Meals" EntityType="Self.Meal" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Tables" EntityType="Self.Table" />
+    <EntitySet Name="Waiters" EntityType="Self.Waiter" />
+    <AssociationSet Name="FK__Drinks__Category__49C3F6B7" Association="Self.FK__Drinks__Category__49C3F6B7">
+      <End Role="DrinkCategories" EntitySet="DrinkCategories" />
+      <End Role="Drinks" EntitySet="Drinks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__DrinkID__4E88ABD4" Association="Self.FK__Orders__DrinkID__4E88ABD4">
+      <End Role="Drinks" EntitySet="Drinks" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Meals__CategoryI__4316F928" Association="Self.FK__Meals__CategoryI__4316F928">
+      <End Role="MealCategories" EntitySet="MealCategories" />
+      <End Role="Meals" EntitySet="Meals" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__MealID__4D94879B" Association="Self.FK__Orders__MealID__4D94879B">
+      <End Role="Meals" EntitySet="Meals" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__TableID__5BE2A6F2" Association="Self.FK__Orders__TableID__5BE2A6F2">
+      <End Role="Tables" EntitySet="Tables" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__WaiterID__4F7CD00D" Association="Self.FK__Orders__WaiterID__4F7CD00D">
+      <End Role="Waiters" EntitySet="Waiters" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
